@@ -168,19 +168,14 @@
         </div>
 
         <script>
-            console.log("JS WORKING");
-            function track(eventName) {
-                console.log("Tracking:", eventName);
+           function track(eventName) {
+    console.log("Tracking:", eventName);
 
-                fetch(
-                    "https://api.counterapi.dev/v1/salary-app/" +
-                        eventName +
-                        "/up",
-                )
-                    .then((res) => res.json())
-                    .then((data) => console.log("Success:", data))
-                    .catch((err) => console.log("Error:", err));
-            }
+    fetch("https://api.countapi.xyz/hit/salary-app/" + eventName)
+    .then(res => res.json())
+    .then(data => console.log("Count:", data.value))
+    .catch(err => console.log("Error:", err));
+}
 
             function scrollToCalc() {
                 document
