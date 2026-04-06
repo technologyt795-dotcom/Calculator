@@ -1,241 +1,177 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>راتبك الحقيقي</title>
-        <style>
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-            }
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>راتبك الحقيقي</title>
 
-            body {
-                font-family: Arial, sans-serif;
-                background: #0f172a;
-                color: white;
-                text-align: center;
-                min-height: 100vh;
-                direction: rtl;
-            }
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-            .container {
-                max-width: 420px;
-                margin: auto;
-                padding: 40px 20px;
-            }
-
-            h1 {
-                font-size: 30px;
-                line-height: 1.4;
-                margin-bottom: 10px;
-            }
-
-            .sub {
-                color: #94a3b8;
-                margin-bottom: 10px;
-            }
-
-            button {
-                width: 100%;
-                padding: 15px;
-                border-radius: 12px;
-                border: none;
-                font-size: 18px;
-                cursor: pointer;
-                margin-top: 10px;
-                font-family: Arial, sans-serif;
-                font-weight: bold;
-                transition: opacity 0.2s;
-            }
-
-            button:hover {
-                opacity: 0.9;
-            }
-
-            .primary {
-                background: #22c55e;
-                color: white;
-            }
-
-            .danger {
-                background: #ef4444;
-                color: white;
-            }
-
-            .card {
-                background: #1e293b;
-                padding: 24px 20px;
-                border-radius: 16px;
-                margin-top: 28px;
-            }
-
-            .card h2 {
-                font-size: 20px;
-                margin-bottom: 6px;
-            }
-
-            input {
-                width: 100%;
-                padding: 12px;
-                margin-top: 10px;
-                border-radius: 10px;
-                border: none;
-                font-size: 16px;
-                background: #0f172a;
-                color: white;
-                text-align: right;
-                font-family: Arial, sans-serif;
-            }
-
-            input::placeholder {
-                color: #64748b;
-            }
-
-            input:focus {
-                outline: 2px solid #22c55e;
-            }
-
-            .result {
-                display: none;
-                margin-top: 20px;
-                font-size: 24px;
-                font-weight: bold;
-                background: rgba(0, 0, 0, 0.2);
-                border-radius: 12px;
-                padding: 16px 12px;
-            }
-
-            .result-hint {
-                display: none;
-                margin-top: 10px;
-                font-size: 15px;
-                color: #94a3b8;
-            }
-
-            #cta {
-                display: none;
-            }
-
-            footer {
-                color: #475569;
-                font-size: 13px;
-                margin-top: 32px;
-            }
-        </style>
-    </head>
-
-    <body>
-        <div class="container">
-            <h1>هذا مو راتبك الحقيقي 😳</h1>
-            <p class="sub">راتبك الحقيقي هو اللي يبقى بعد المصاريف</p>
-
-            <button
-                class="primary"
-                onclick="track('click_button'); scrollToCalc()"
-            >
-                احسب كم يتبقى من راتبك الآن 😳
-            </button>
-
-            <p class="sub" style="margin-top: 12px">
-                😳 غالبية الناس ما يتوقعون النتيجة
-            </p>
-
-            <div class="card" id="calc">
-                <h2>الحاسبة</h2>
-
-                <input type="number" id="salary" placeholder="راتبك الشهري" />
-                <input
-                    type="number"
-                    id="expenses"
-                    placeholder="مصاريفك الشهرية"
-                />
-
-                <button class="danger" onclick="calculate()">
-                    احسب النتيجة الآن ⚠️
-                </button>
-
-                <div class="result" id="result"></div>
-                <div class="result-hint" id="hint"></div>
-
-                <button class="primary" id="cta" onclick="goToOffer()">
-                    ابدأ التحكم في فلوسك الآن 🔥
-                </button>
-            </div>
-
-            <footer>© 2024 راتبك الحقيقي</footer>
-        </div>
-
-        <script>
-           function track(eventName) {
-    console.log("Tracking:", eventName);
-
-    fetch("https://api.countapi.xyz/hit/salary-app/" + eventName)
-    .then(res => res.json())
-    .then(data => console.log("Count:", data.value))
-    .catch(err => console.log("Error:", err));
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    text-align: center;
 }
 
-            function scrollToCalc() {
-                document
-                    .getElementById("calc")
-                    .scrollIntoView({ behavior: "smooth" });
-            }
+.container {
+    max-width: 420px;
+    margin: auto;
+    padding: 40px 20px;
+}
 
-            function calculate() {
-                track("calculate");
+h1 { font-size: 30px; margin-bottom: 10px; }
 
-                var salary = parseFloat(
-                    document.getElementById("salary").value,
-                );
-                var expenses = parseFloat(
-                    document.getElementById("expenses").value,
-                );
+.sub { color: #94a3b8; margin-bottom: 10px; }
 
-                if (!salary || !expenses) {
-                    alert("أدخل البيانات");
-                    return;
-                }
+button {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+}
 
-                var remaining = salary - expenses;
+.primary { background: #22c55e; color: white; }
+.danger { background: #ef4444; color: white; }
 
-                var resultDiv = document.getElementById("result");
-                var hintDiv = document.getElementById("hint");
-                var cta = document.getElementById("cta");
+.card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 16px;
+    margin-top: 20px;
+}
 
-                var color =
-                    remaining > 0
-                        ? "#22c55e"
-                        : remaining === 0
-                          ? "#f59e0b"
-                          : "#ef4444";
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+}
 
-                resultDiv.style.display = "block";
-                resultDiv.style.color = color;
-                resultDiv.innerHTML =
-                    "😳 راتبك الحقيقي هو: <span style='font-size:28px;'>" +
-                    remaining.toLocaleString("ar-SA") +
-                    "</span> ريال";
+.result {
+    display: none;
+    margin-top: 20px;
+    font-size: 24px;
+}
 
-                hintDiv.style.display = "block";
-                if (remaining < 0) {
-                    hintDiv.textContent = "⚠️ أنت تصرف أكثر من راتبك!";
-                } else if (remaining === 0) {
-                    hintDiv.textContent = "راتبك يساوي مصاريفك تماماً";
-                } else if (remaining < salary * 0.1) {
-                    hintDiv.textContent = "🔥 تحتاج تراجع مصاريفك!";
-                } else {
-                    hintDiv.textContent = "";
-                }
+#cta { display: none; }
 
-                cta.style.display = "block";
-            }
+footer {
+    color: #475569;
+    margin-top: 30px;
+    font-size: 13px;
+}
+</style>
+</head>
 
-            function goToOffer() {
-                track("purchase_click");
-                window.location.href = "PUT_YOUR_LINK_HERE";
-            }
-        </script>
-    </body>
+<body>
+
+<div class="container">
+
+    <h1>هذا مو راتبك الحقيقي 😳</h1>
+    <p class="sub">راتبك الحقيقي هو اللي يبقى بعد المصاريف</p>
+
+    <button class="primary" onclick="track('click_button'); scrollToCalc()">
+        احسب كم يتبقى من راتبك الآن 😳
+    </button>
+
+    <p class="sub">😳 غالبية الناس ما يتوقعون النتيجة</p>
+
+    <div class="card" id="calc">
+        <input type="number" id="salary" placeholder="راتبك الشهري">
+        <input type="number" id="expenses" placeholder="مصاريفك الشهرية">
+
+        <button class="danger" onclick="calculate()">
+            احسب النتيجة الآن ⚠️
+        </button>
+
+        <div class="result" id="result"></div>
+
+        <button class="primary" id="cta" onclick="goToOffer()">
+            ابدأ التحكم في فلوسك الآن 🔥
+        </button>
+    </div>
+
+    <!-- 🔥 الإحصائيات -->
+    <div id="stats" style="margin-top:20px; color:#94a3b8;"></div>
+
+    <footer>© 2024 راتبك الحقيقي</footer>
+
+</div>
+
+<script>
+
+// 🔥 التتبع
+function track(eventName) {
+    fetch("https://api.countapi.xyz/hit/salary-app/" + eventName)
+    .then(res => res.json())
+    .then(data => {
+        console.log(eventName + ":", data.value);
+        loadStats(); // تحديث الأرقام بعد كل حدث
+    })
+    .catch(err => console.log(err));
+}
+
+// النزول للحاسبة
+function scrollToCalc() {
+    document.getElementById("calc").scrollIntoView({behavior: "smooth"});
+}
+
+// الحساب
+function calculate() {
+    track("calculate");
+
+    let salary = document.getElementById("salary").value;
+    let expenses = document.getElementById("expenses").value;
+
+    if (!salary || !expenses) {
+        alert("أدخل البيانات");
+        return;
+    }
+
+    let result = salary - expenses;
+
+    let resultDiv = document.getElementById("result");
+    let cta = document.getElementById("cta");
+
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = "😳 راتبك الحقيقي: " + result + " ريال";
+
+    cta.style.display = "block";
+}
+
+// التحويل
+function goToOffer() {
+    track("purchase_click");
+    window.location.href = "PUT_YOUR_LINK_HERE";
+}
+
+// 🔥 تحميل الإحصائيات
+function loadStats() {
+    Promise.all([
+        fetch("https://api.countapi.xyz/get/salary-app/click_button").then(r => r.json()),
+        fetch("https://api.countapi.xyz/get/salary-app/calculate").then(r => r.json()),
+        fetch("https://api.countapi.xyz/get/salary-app/purchase_click").then(r => r.json())
+    ])
+    .then(([clicks, calculates, purchases]) => {
+        document.getElementById("stats").innerHTML =
+            "👆 ضغط: " + (clicks.value || 0) +
+            " | 🧮 حسب: " + (calculates.value || 0) +
+            " | 💰 شراء: " + (purchases.value || 0);
+    });
+}
+
+// تشغيل تلقائي
+loadStats();
+setInterval(loadStats, 5000);
+
+</script>
+
+</body>
 </html>
