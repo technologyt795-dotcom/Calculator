@@ -1,177 +1,241 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>راتبك الحقيقي</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>راتبك الحقيقي</title>
+        <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
 
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
+            body {
+                font-family: Arial, sans-serif;
+                background: #0f172a;
+                color: white;
+                text-align: center;
+                min-height: 100vh;
+                direction: rtl;
+            }
 
-body {
-    font-family: Arial;
-    background: #0f172a;
-    color: white;
-    text-align: center;
-}
+            .container {
+                max-width: 420px;
+                margin: auto;
+                padding: 40px 20px;
+            }
 
-.container {
-    max-width: 420px;
-    margin: auto;
-    padding: 40px 20px;
-}
+            h1 {
+                font-size: 30px;
+                line-height: 1.4;
+                margin-bottom: 10px;
+            }
 
-h1 { font-size: 30px; margin-bottom: 10px; }
+            .sub {
+                color: #94a3b8;
+                margin-bottom: 10px;
+            }
 
-.sub { color: #94a3b8; margin-bottom: 10px; }
+            button {
+                width: 100%;
+                padding: 15px;
+                border-radius: 12px;
+                border: none;
+                font-size: 18px;
+                cursor: pointer;
+                margin-top: 10px;
+                font-family: Arial, sans-serif;
+                font-weight: bold;
+                transition: opacity 0.2s;
+            }
 
-button {
-    width: 100%;
-    padding: 15px;
-    border-radius: 12px;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-weight: bold;
-}
+            button:hover {
+                opacity: 0.9;
+            }
 
-.primary { background: #22c55e; color: white; }
-.danger { background: #ef4444; color: white; }
+            .primary {
+                background: #22c55e;
+                color: white;
+            }
 
-.card {
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 16px;
-    margin-top: 20px;
-}
+            .danger {
+                background: #ef4444;
+                color: white;
+            }
 
-input {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border-radius: 10px;
-    border: none;
-}
+            .card {
+                background: #1e293b;
+                padding: 24px 20px;
+                border-radius: 16px;
+                margin-top: 28px;
+            }
 
-.result {
-    display: none;
-    margin-top: 20px;
-    font-size: 24px;
-}
+            .card h2 {
+                font-size: 20px;
+                margin-bottom: 6px;
+            }
 
-#cta { display: none; }
+            input {
+                width: 100%;
+                padding: 12px;
+                margin-top: 10px;
+                border-radius: 10px;
+                border: none;
+                font-size: 16px;
+                background: #0f172a;
+                color: white;
+                text-align: right;
+                font-family: Arial, sans-serif;
+            }
 
-footer {
-    color: #475569;
-    margin-top: 30px;
-    font-size: 13px;
-}
-</style>
-</head>
+            input::placeholder {
+                color: #64748b;
+            }
 
-<body>
+            input:focus {
+                outline: 2px solid #22c55e;
+            }
 
-<div class="container">
+            .result {
+                display: none;
+                margin-top: 20px;
+                font-size: 24px;
+                font-weight: bold;
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 12px;
+                padding: 16px 12px;
+            }
 
-    <h1>هذا مو راتبك الحقيقي 😳</h1>
-    <p class="sub">راتبك الحقيقي هو اللي يبقى بعد المصاريف</p>
+            .result-hint {
+                display: none;
+                margin-top: 10px;
+                font-size: 15px;
+                color: #94a3b8;
+            }
 
-    <button class="primary" onclick="track('click_button'); scrollToCalc()">
-        احسب كم يتبقى من راتبك الآن 😳
-    </button>
+            #cta {
+                display: none;
+            }
 
-    <p class="sub">😳 غالبية الناس ما يتوقعون النتيجة</p>
+            footer {
+                color: #475569;
+                font-size: 13px;
+                margin-top: 32px;
+            }
+        </style>
+    </head>
 
-    <div class="card" id="calc">
-        <input type="number" id="salary" placeholder="راتبك الشهري">
-        <input type="number" id="expenses" placeholder="مصاريفك الشهرية">
+    <body>
+        <div class="container">
+            <h1>هذا مو راتبك الحقيقي 😳</h1>
+            <p class="sub">راتبك الحقيقي هو اللي يبقى بعد المصاريف</p>
 
-        <button class="danger" onclick="calculate()">
-            احسب النتيجة الآن ⚠️
-        </button>
+            <button
+                class="primary"
+                onclick="track('click_button'); scrollToCalc()"
+            >
+                احسب كم يتبقى من راتبك الآن 😳
+            </button>
 
-        <div class="result" id="result"></div>
+            <p class="sub" style="margin-top: 12px">
+                😳 غالبية الناس ما يتوقعون النتيجة
+            </p>
 
-        <button class="primary" id="cta" onclick="goToOffer()">
-            ابدأ التحكم في فلوسك الآن 🔥
-        </button>
-    </div>
+            <div class="card" id="calc">
+                <h2>الحاسبة</h2>
 
-    <!-- 🔥 الإحصائيات -->
-    <div id="stats" style="margin-top:20px; color:#94a3b8;"></div>
+                <input type="number" id="salary" placeholder="راتبك الشهري" />
+                <input
+                    type="number"
+                    id="expenses"
+                    placeholder="مصاريفك الشهرية"
+                />
 
-    <footer>© 2024 راتبك الحقيقي</footer>
+                <button class="danger" onclick="calculate()">
+                    احسب النتيجة الآن ⚠️
+                </button>
 
-</div>
+                <div class="result" id="result"></div>
+                <div class="result-hint" id="hint"></div>
 
-<script>
+                <button class="primary" id="cta" onclick="goToOffer()">
+                    ابدأ التحكم في فلوسك الآن 🔥
+                </button>
+            </div>
 
-// 🔥 التتبع
-function track(eventName) {
+            <footer>© 2024 راتبك الحقيقي</footer>
+        </div>
+
+        <script>
+          function track(eventName) {
+    console.log("Tracking:", eventName);
+
     fetch("https://api.countapi.xyz/hit/salary-app/" + eventName)
     .then(res => res.json())
-    .then(data => {
-        console.log(eventName + ":", data.value);
-        loadStats(); // تحديث الأرقام بعد كل حدث
-    })
-    .catch(err => console.log(err));
+    .then(data => console.log("Count:", data.value))
+    .catch(err => console.log("Error:", err));
 }
 
-// النزول للحاسبة
-function scrollToCalc() {
-    document.getElementById("calc").scrollIntoView({behavior: "smooth"});
-}
+            function scrollToCalc() {
+                document
+                    .getElementById("calc")
+                    .scrollIntoView({ behavior: "smooth" });
+            }
 
-// الحساب
-function calculate() {
-    track("calculate");
+            function calculate() {
+                track("calculate");
 
-    let salary = document.getElementById("salary").value;
-    let expenses = document.getElementById("expenses").value;
+                var salary = parseFloat(
+                    document.getElementById("salary").value,
+                );
+                var expenses = parseFloat(
+                    document.getElementById("expenses").value,
+                );
 
-    if (!salary || !expenses) {
-        alert("أدخل البيانات");
-        return;
-    }
+                if (!salary || !expenses) {
+                    alert("أدخل البيانات");
+                    return;
+                }
 
-    let result = salary - expenses;
+                var remaining = salary - expenses;
 
-    let resultDiv = document.getElementById("result");
-    let cta = document.getElementById("cta");
+                var resultDiv = document.getElementById("result");
+                var hintDiv = document.getElementById("hint");
+                var cta = document.getElementById("cta");
 
-    resultDiv.style.display = "block";
-    resultDiv.innerHTML = "😳 راتبك الحقيقي: " + result + " ريال";
+                var color =
+                    remaining > 0
+                        ? "#22c55e"
+                        : remaining === 0
+                          ? "#f59e0b"
+                          : "#ef4444";
 
-    cta.style.display = "block";
-}
+                resultDiv.style.display = "block";
+                resultDiv.style.color = color;
+                resultDiv.innerHTML =
+                    "😳 راتبك الحقيقي هو: <span style='font-size:28px;'>" +
+                    remaining.toLocaleString("ar-SA") +
+                    "</span> ريال";
 
-// التحويل
-function goToOffer() {
-    track("purchase_click");
-    window.location.href = "PUT_YOUR_LINK_HERE";
-}
+                hintDiv.style.display = "block";
+                if (remaining < 0) {
+                    hintDiv.textContent = "⚠️ أنت تصرف أكثر من راتبك!";
+                } else if (remaining === 0) {
+                    hintDiv.textContent = "راتبك يساوي مصاريفك تماماً";
+                } else if (remaining < salary * 0.1) {
+                    hintDiv.textContent = "🔥 تحتاج تراجع مصاريفك!";
+                } else {
+                    hintDiv.textContent = "";
+                }
 
-// 🔥 تحميل الإحصائيات
-function loadStats() {
-    Promise.all([
-        fetch("https://api.countapi.xyz/get/salary-app/click_button").then(r => r.json()),
-        fetch("https://api.countapi.xyz/get/salary-app/calculate").then(r => r.json()),
-        fetch("https://api.countapi.xyz/get/salary-app/purchase_click").then(r => r.json())
-    ])
-    .then(([clicks, calculates, purchases]) => {
-        document.getElementById("stats").innerHTML =
-            "👆 ضغط: " + (clicks.value || 0) +
-            " | 🧮 حسب: " + (calculates.value || 0) +
-            " | 💰 شراء: " + (purchases.value || 0);
-    });
-}
+                cta.style.display = "block";
+            }
 
-// تشغيل تلقائي
-loadStats();
-setInterval(loadStats, 5000);
-
-</script>
-
-</body>
+            function goToOffer() {
+                track("purchase_click");
+                window.location.href = "PUT_YOUR_LINK_HERE";
+            }
+        </script>
+    </body>
 </html>
