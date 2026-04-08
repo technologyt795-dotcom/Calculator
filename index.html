@@ -103,39 +103,52 @@ input {
 
 <script>
 
-// 🔥 دالة التتبع (Analytics + عداد)
-function track(eventName) {
-    console.log("Tracking:", eventName);
+// 🔥 تتبع احترافي
+function track(eventName, extra = {}) {
+    console.log("Tracking:", eventName, extra);
 
-    // Google Analytics
     if (typeof gtag === "function") {
         gtag('event', eventName, {
             event_category: 'engagement',
-            event_label: eventName
+            ...extra
         });
     }
-
-    // Count API (اختياري)
-    fetch("https://api.countapi.xyz/hit/salary-app/" + eventName)
-    .then(res => res.json())
-    .then(data => console.log("Count:", data.value))
-    .catch(err => console.log("Error:", err));
 }
 
-// النزول للحاسبة
+// 👇 تتبع الكتابة (مرة واحدة فقط)
+let salaryTracked = false;
+let expensesTracked = false;
+
+document.getElementById("salary").addEventListener("input", function() {
+    if (!salaryTracked && this.value.length > 0) {
+        track('salary_entered');
+        salaryTracked = true;
+    }
+});
+
+document.getElementById("expenses").addEventListener("input", function() {
+    if (!expensesTracked && this.value.length > 0) {
+        track('expenses_entered');
+        expensesTracked = true;
+    }
+});
+
+// النزول
 function scrollToCalc() {
+    track('scroll_to_calculator');
     document.getElementById("calc").scrollIntoView({behavior: "smooth"});
 }
 
 // الحساب
 function calculate() {
 
-    track('calculate');
+    track('calculate_clicked');
 
-    let salary = document.getElementById("salary").value;
-    let expenses = document.getElementById("expenses").value;
+    let salary = parseFloat(document.getElementById("salary").value);
+    let expenses = parseFloat(document.getElementById("expenses").value);
 
     if (!salary || !expenses) {
+        track('input_error');
         alert("أدخل البيانات");
         return;
     }
@@ -148,18 +161,20 @@ function calculate() {
     resultDiv.style.display = "block";
     resultDiv.innerHTML = "😳 راتبك الحقيقي هو: " + result + " ريال";
 
+    // 🔥 تتبع ظهور النتيجة
+    track('result_shown', {
+        value: result
+    });
+
     cta.style.display = "block";
 }
 
 // التحويل
 function goToOffer() {
-
     track('go_to_free_product');
-
     window.location.href = "https://technologyt795-dotcom.github.io/mizaniyati-free/";
 }
 
 </script>
-
 </body>
 </html>
