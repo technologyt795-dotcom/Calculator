@@ -103,37 +103,38 @@ input {
 
 <script>
 
-// 🔥 تتبع احترافي
-function track(eventName, extra = {}) {
-    console.log("Tracking:", eventName, extra);
+// 🔥 Tracking system
+function track(eventName, params = {}) {
+    console.log("Tracking:", eventName, params);
 
     if (typeof gtag === "function") {
-        gtag('event', eventName, {
-            event_category: 'engagement',
-            ...extra
-        });
+        gtag('event', eventName, params);
     }
 }
 
-// 👇 تتبع الكتابة
+// 👇 تتبع الإدخال
 let salaryTracked = false;
 let expensesTracked = false;
 
 document.getElementById("salary").addEventListener("input", function() {
     if (!salaryTracked && this.value.length > 0) {
-        track('salary_entered');
+        track('salary_entered', {
+            salary_value: Number(this.value)
+        });
         salaryTracked = true;
     }
 });
 
 document.getElementById("expenses").addEventListener("input", function() {
     if (!expensesTracked && this.value.length > 0) {
-        track('expenses_entered');
+        track('expenses_entered', {
+            expenses_value: Number(this.value)
+        });
         expensesTracked = true;
     }
 });
 
-// النزول
+// scroll
 function scrollToCalc() {
     track('scroll_to_calculator');
     document.getElementById("calc").scrollIntoView({behavior: "smooth"});
@@ -141,8 +142,6 @@ function scrollToCalc() {
 
 // الحساب
 function calculate() {
-
-    track('calculate_clicked');
 
     let salary = parseFloat(document.getElementById("salary").value);
     let expenses = parseFloat(document.getElementById("expenses").value);
@@ -155,12 +154,17 @@ function calculate() {
 
     let result = salary - expenses;
 
+    // تتبع الضغط
+    track('calculate_clicked', {
+        salary_value: salary,
+        expenses_value: expenses
+    });
+
     let resultDiv = document.getElementById("result");
     let cta = document.getElementById("cta");
 
     resultDiv.style.display = "block";
 
-    // 🔥 التعديل الجديد (المهم)
     resultDiv.innerHTML = `
 😳 راتبك الحقيقي هو: ${result} ريال<br><br>
 
@@ -175,8 +179,11 @@ style="color:#22c55e; font-weight:bold; text-decoration:none;">
 </a>
 `;
 
+    // تتبع النتيجة
     track('result_shown', {
-        value: result
+        salary_value: salary,
+        expenses_value: expenses,
+        net_income: result
     });
 
     cta.style.display = "block";
@@ -189,5 +196,6 @@ function goToOffer() {
 }
 
 </script>
+
 </body>
 </html>
