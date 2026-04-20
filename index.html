@@ -5,18 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>راتبك الحقيقي</title>
 
-<!-- 🔵 GA4 (FIXED) -->
+<!-- 🔵 GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-901R80XCW0"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 
 gtag('js', new Date());
-
-// 🔥 ربط الموقع
 gtag('config', 'G-901R80XCW0');
-
-// 🔥 إرسال page_view (مهم للـ realtime)
 gtag('event', 'page_view');
 </script>
 
@@ -31,7 +27,6 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 
-// 🔴 ضع Pixel ID الحقيقي هنا
 fbq('init', 'META_PIXEL_ID');
 fbq('track', 'PageView');
 </script>
@@ -66,7 +61,6 @@ var a=document.getElementsByTagName("script")[0];
 a.parentNode.insertBefore(o,a)
 };
 
-// 🔴 ضع TikTok Pixel ID هنا
 ttq.load('TIKTOK_PIXEL_ID');
 ttq.page();
 }(window, document, 'ttq');
@@ -127,18 +121,14 @@ line-height:1.8
 <input type="number" id="salary" placeholder="راتبك الشهري">
 <input type="number" id="expenses" placeholder="مصاريفك الشهرية">
 
-<button class="danger" onclick="calculate()">
-احسب الآن
-</button>
+<button class="danger" onclick="calculate()">احسب الآن</button>
 
 <div class="card">
-
 <div class="result" id="result"></div>
 
 <button class="primary" id="cta" style="display:none" onclick="goToOffer()">
 اكتشف إدارة أموالك 🔥
 </button>
-
 </div>
 
 </div>
@@ -148,19 +138,16 @@ line-height:1.8
 /// 🔥 Tracking system
 function track(event, data = {}) {
 
-    // GA4
     if (typeof gtag === "function") {
         gtag('event', event, data);
     }
 
-    // Meta
     if (window.fbq) {
         fbq('trackCustom', event, {
             value: data.net || data.salary || data.expenses || 0
         });
     }
 
-    // TikTok
     if (window.ttq) {
         ttq.track(event, {
             value: data.net || data.salary || data.expenses || 0
@@ -170,29 +157,44 @@ function track(event, data = {}) {
     console.log(event, data);
 }
 
-/// 📊 بداية التتبع
+/// 📊 بداية
 track("page_view");
 
-let salaryTracked = false;
-let expensesTracked = false;
+/// 🔥 Debounce tracking
+let salaryTimer;
+let expensesTimer;
 
-/// إدخال الراتب
+/// salary
 document.getElementById("salary").addEventListener("input", function(){
-    if(!salaryTracked && this.value){
-        track("salary_entered",{salary:Number(this.value)});
-        salaryTracked = true;
-    }
+
+    clearTimeout(salaryTimer);
+
+    salaryTimer = setTimeout(() => {
+        let value = Number(this.value);
+
+        if(value){
+            track("salary_entered", { salary: value });
+        }
+
+    }, 800);
 });
 
-/// إدخال المصاريف
+/// expenses
 document.getElementById("expenses").addEventListener("input", function(){
-    if(!expensesTracked && this.value){
-        track("expenses_entered",{expenses:Number(this.value)});
-        expensesTracked = true;
-    }
+
+    clearTimeout(expensesTimer);
+
+    expensesTimer = setTimeout(() => {
+        let value = Number(this.value);
+
+        if(value){
+            track("expenses_entered", { expenses: value });
+        }
+
+    }, 800);
 });
 
-/// الحساب
+/// calculate
 function calculate(){
 
     let salary = Number(document.getElementById("salary").value);
@@ -213,16 +215,12 @@ function calculate(){
     `😳 صافي راتبك الحقيقي: <b>${result} ريال</b><br><br>
     اكتشف كيف تتحكم بفلوسك بشكل أفضل 👇`;
 
-    track("result_shown",{
-        salary,
-        expenses,
-        net: result
-    });
+    track("result_shown",{salary,expenses,net:result});
 
     document.getElementById("cta").style.display = "block";
 }
 
-/// التحويل
+/// conversion
 function goToOffer(){
     track("conversion_click");
     window.location.href =
