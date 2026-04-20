@@ -115,7 +115,7 @@ function track(eventName, extra = {}) {
     }
 }
 
-// 👇 تتبع الكتابة (مرة واحدة فقط)
+// 👇 تتبع الكتابة
 let salaryTracked = false;
 let expensesTracked = false;
 
@@ -159,9 +159,22 @@ function calculate() {
     let cta = document.getElementById("cta");
 
     resultDiv.style.display = "block";
-    resultDiv.innerHTML = "😳 راتبك الحقيقي هو: " + result + " ريال";
 
-    // 🔥 تتبع ظهور النتيجة
+    // 🔥 التعديل الجديد (المهم)
+    resultDiv.innerHTML = `
+😳 راتبك الحقيقي هو: ${result} ريال<br><br>
+
+هذا مجرد حساب بسيط…<br>
+لكن الواقع أعمق من كذا 👀<br><br>
+
+اكتشف وين تروح فلوسك بالتفصيل 👇<br><br>
+
+<a href="https://technologyt795-dotcom.github.io/mizaniyati-free/" 
+style="color:#22c55e; font-weight:bold; text-decoration:none;">
+جرب النسخة المجانية الآن 🔥
+</a>
+`;
+
     track('result_shown', {
         value: result
     });
