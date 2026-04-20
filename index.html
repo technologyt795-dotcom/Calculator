@@ -5,13 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>راتبك الحقيقي</title>
 
-<!-- 🔵 GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-901R80XCW0 ✅"></script>
+<!-- 🔵 GA4 (FIXED) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-901R80XCW0"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
+
 gtag('js', new Date());
-gtag('config', 'G-901R80XCW0 ✅');
+
+// 🔥 ربط الموقع
+gtag('config', 'G-901R80XCW0');
+
+// 🔥 إرسال page_view (مهم للـ realtime)
+gtag('event', 'page_view');
 </script>
 
 <!-- 🔵 Meta Pixel -->
@@ -25,6 +31,7 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 
+// 🔴 ضع Pixel ID الحقيقي هنا
 fbq('init', 'META_PIXEL_ID');
 fbq('track', 'PageView');
 </script>
@@ -59,6 +66,7 @@ var a=document.getElementsByTagName("script")[0];
 a.parentNode.insertBefore(o,a)
 };
 
+// 🔴 ضع TikTok Pixel ID هنا
 ttq.load('TIKTOK_PIXEL_ID');
 ttq.page();
 }(window, document, 'ttq');
@@ -137,7 +145,7 @@ line-height:1.8
 
 <script>
 
-/// 🔥 Tracking (Clean & Professional)
+/// 🔥 Tracking system
 function track(event, data = {}) {
 
     // GA4
@@ -145,14 +153,14 @@ function track(event, data = {}) {
         gtag('event', event, data);
     }
 
-    // Meta Pixel (light data only)
+    // Meta
     if (window.fbq) {
         fbq('trackCustom', event, {
             value: data.net || data.salary || data.expenses || 0
         });
     }
 
-    // TikTok Pixel (light data only)
+    // TikTok
     if (window.ttq) {
         ttq.track(event, {
             value: data.net || data.salary || data.expenses || 0
@@ -162,13 +170,13 @@ function track(event, data = {}) {
     console.log(event, data);
 }
 
-/// 📊 Funnel start
+/// 📊 بداية التتبع
 track("page_view");
 
 let salaryTracked = false;
 let expensesTracked = false;
 
-/// salary input
+/// إدخال الراتب
 document.getElementById("salary").addEventListener("input", function(){
     if(!salaryTracked && this.value){
         track("salary_entered",{salary:Number(this.value)});
@@ -176,7 +184,7 @@ document.getElementById("salary").addEventListener("input", function(){
     }
 });
 
-/// expenses input
+/// إدخال المصاريف
 document.getElementById("expenses").addEventListener("input", function(){
     if(!expensesTracked && this.value){
         track("expenses_entered",{expenses:Number(this.value)});
@@ -184,7 +192,7 @@ document.getElementById("expenses").addEventListener("input", function(){
     }
 });
 
-/// calculate
+/// الحساب
 function calculate(){
 
     let salary = Number(document.getElementById("salary").value);
@@ -214,7 +222,7 @@ function calculate(){
     document.getElementById("cta").style.display = "block";
 }
 
-/// conversion
+/// التحويل
 function goToOffer(){
     track("conversion_click");
     window.location.href =
