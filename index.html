@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>راتبك الحقيقي PRO</title>
+<title>راتبك الحقيقي</title>
 
 <!-- 🔵 GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=GA4_ID"></script>
@@ -67,14 +67,45 @@ ttq.page();
 <style>
 body{font-family:Arial;background:#0f172a;color:#fff;text-align:center}
 .container{max-width:420px;margin:auto;padding:30px 20px}
-input{width:100%;padding:12px;margin-top:10px;border:none;border-radius:10px}
-button{width:100%;padding:14px;margin-top:10px;border:none;border-radius:12px;cursor:pointer}
+
+h2{font-size:26px;margin-bottom:10px}
+.sub{color:#94a3b8;font-size:14px;margin-bottom:20px}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:10px;
+font-size:16px
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-size:16px
+}
+
 .primary{background:#22c55e;color:#fff}
 .danger{background:#ef4444;color:#fff}
-.card{background:#1e293b;padding:20px;border-radius:16px;margin-top:20px}
-.result{display:none;margin-top:15px}
-.dashboard{margin-top:25px;background:#0b1220;padding:15px;border-radius:12px;text-align:right}
-.small{font-size:12px;color:#94a3b8}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:16px;
+margin-top:20px
+}
+
+.result{
+display:none;
+margin-top:15px;
+font-size:18px;
+line-height:1.8
+}
 </style>
 </head>
 
@@ -82,100 +113,78 @@ button{width:100%;padding:14px;margin-top:10px;border:none;border-radius:12px;cu
 
 <div class="container">
 
-<h2>راتبك الحقيقي PRO 😳</h2>
+<h2>راتبك الحقيقي 😳</h2>
+<p class="sub">اكتشف كم يبقى من راتبك بعد المصاريف</p>
 
 <input type="number" id="salary" placeholder="راتبك الشهري">
 <input type="number" id="expenses" placeholder="مصاريفك الشهرية">
 
-<button class="danger" onclick="calculate()">احسب النتيجة</button>
+<button class="danger" onclick="calculate()">
+احسب الآن
+</button>
 
 <div class="card">
-    <div class="result" id="result"></div>
-    <button class="primary" id="cta" style="display:none" onclick="goToOffer()">
-    اكتشف أكثر 🔥
-    </button>
-</div>
 
-<!-- 📊 Dashboard -->
-<div class="dashboard">
-<h3>📊 Dashboard Live</h3>
-<div id="log"></div>
+<div class="result" id="result"></div>
+
+<button class="primary" id="cta" style="display:none" onclick="goToOffer()">
+اكتشف إدارة أموالك 🔥
+</button>
+
 </div>
 
 </div>
 
 <script>
 
-/// 🆔 User ID
-let userId = localStorage.getItem("uid");
+/// 🔥 Tracking (Clean & Professional)
+function track(event, data = {}) {
 
-if(!userId){
-    userId = "user_" + Math.floor(Math.random()*99999999);
-    localStorage.setItem("uid", userId);
-}
-
-/// 📦 Events storage
-let events = JSON.parse(localStorage.getItem("events") || "[]");
-
-function saveEvent(e){
-    events.push(e);
-    localStorage.setItem("events", JSON.stringify(events));
-    renderDashboard();
-}
-
-/// 🔥 Tracking (FIXED PRO VERSION)
-function track(eventName, data={}){
-
-    let value = data.net || data.salary || data.expenses || 0;
-
-    let payload = {
-        user_id: userId,
-        value: value
-    };
-
-    console.log(eventName, payload);
-
-    // GA4 (clean)
-    if(typeof gtag === "function"){
-        gtag('event', eventName, payload);
+    // GA4
+    if (typeof gtag === "function") {
+        gtag('event', event, data);
     }
 
-    // Meta (simple values only)
-    if(window.fbq){
-        fbq('trackCustom', eventName, payload);
+    // Meta Pixel (light data only)
+    if (window.fbq) {
+        fbq('trackCustom', event, {
+            value: data.net || data.salary || data.expenses || 0
+        });
     }
 
-    // TikTok (simple values only)
-    if(window.ttq){
-        ttq.track(eventName, payload);
+    // TikTok Pixel (light data only)
+    if (window.ttq) {
+        ttq.track(event, {
+            value: data.net || data.salary || data.expenses || 0
+        });
     }
 
-    saveEvent({
-        event: eventName,
-        ...payload,
-        time: new Date().toISOString()
-    });
+    console.log(event, data);
 }
 
-/// Page view funnel
-track("page_view",{step:"landing"});
+/// 📊 Funnel start
+track("page_view");
 
-let s=false,e=false;
+let salaryTracked = false;
+let expensesTracked = false;
 
+/// salary input
 document.getElementById("salary").addEventListener("input", function(){
-    if(!s){
+    if(!salaryTracked && this.value){
         track("salary_entered",{salary:Number(this.value)});
-        s=true;
+        salaryTracked = true;
     }
 });
 
+/// expenses input
 document.getElementById("expenses").addEventListener("input", function(){
-    if(!e){
+    if(!expensesTracked && this.value){
         track("expenses_entered",{expenses:Number(this.value)});
-        e=true;
+        expensesTracked = true;
     }
 });
 
+/// calculate
 function calculate(){
 
     let salary = Number(document.getElementById("salary").value);
@@ -190,36 +199,27 @@ function calculate(){
 
     track("calculate_clicked",{salary,expenses});
 
-    document.getElementById("result").style.display="block";
+    document.getElementById("result").style.display = "block";
+
     document.getElementById("result").innerHTML =
-    `😳 صافي راتبك: ${result} ريال`;
+    `😳 صافي راتبك الحقيقي: <b>${result} ريال</b><br><br>
+    اكتشف كيف تتحكم بفلوسك بشكل أفضل 👇`;
 
-    track("result_shown",{salary,expenses,net:result});
-
-    document.getElementById("cta").style.display="block";
-}
-
-function goToOffer(){
-    track("conversion_click");
-    window.location.href="https://technologyt795-dotcom.github.io/mizaniyati-free/";
-}
-
-/// Dashboard
-function renderDashboard(){
-
-    let html = "";
-
-    events.slice(-10).reverse().forEach(e=>{
-        html += `
-        <div class="small">
-        ${e.time} | ${e.event} | value: ${e.value || 0}
-        </div>`;
+    track("result_shown",{
+        salary,
+        expenses,
+        net: result
     });
 
-    document.getElementById("log").innerHTML = html;
+    document.getElementById("cta").style.display = "block";
 }
 
-renderDashboard();
+/// conversion
+function goToOffer(){
+    track("conversion_click");
+    window.location.href =
+    "https://technologyt795-dotcom.github.io/mizaniyati-free/";
+}
 
 </script>
 
