@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>راتبك الحقيقي</title>
+<title>راتبك الحقيقي PRO</title>
 
 <!-- 🔵 GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-901R80XCW0"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA4_ID"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-901R80XCW0');
+gtag('config', 'GA4_ID');
 </script>
 
 <!-- 🔵 Meta Pixel -->
@@ -32,30 +32,32 @@ fbq('track', 'PageView');
 <!-- 🎵 TikTok Pixel -->
 <script>
 !function (w, d, t) {
-  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
-  ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],
-  ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
-  for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
-  ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
-  ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";
-  ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=i;ttq._t=ttq._t||{};ttq._t[e]=+new Date;
-  ttq._o=ttq._o||{};ttq._o[e]=n||{};var o=document.createElement("script");
-  o.type="text/javascript";o.async=!0;o.src=i+"?sdkid="+e+"&lib="+t;
-  var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
-  ttq.load('TIKTOK_PIXEL_ID');
-  ttq.page();
+w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
+ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"];
+ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";
+ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=i;ttq._t=ttq._t||{};ttq._t[e]=+new Date;
+ttq._o=ttq._o||{};ttq._o[e]=n||{};var o=document.createElement("script");
+o.async=!0;o.src=i+"?sdkid="+e+"&lib="+t;
+var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+ttq.load('TIKTOK_PIXEL_ID');
+ttq.page();
 }(window, document, 'ttq');
 </script>
 
 <style>
-body { font-family: Arial; background:#0f172a; color:#fff; text-align:center; }
-.container { max-width:420px; margin:auto; padding:40px 20px; }
-button { width:100%; padding:15px; margin-top:10px; border:none; border-radius:12px; cursor:pointer; }
+body{font-family:Arial;background:#0f172a;color:#fff;text-align:center}
+.container{max-width:420px;margin:auto;padding:30px 20px}
+input{width:100%;padding:12px;margin-top:10px;border:none;border-radius:10px}
+button{width:100%;padding:14px;margin-top:10px;border:none;border-radius:12px;cursor:pointer}
 .primary{background:#22c55e;color:#fff}
 .danger{background:#ef4444;color:#fff}
-input{width:100%;padding:12px;margin-top:10px;border-radius:10px;border:none}
 .card{background:#1e293b;padding:20px;border-radius:16px;margin-top:20px}
-.result{display:none;margin-top:20px;font-size:20px}
+.result{display:none;margin-top:15px}
+.dashboard{margin-top:25px;background:#0b1220;padding:15px;border-radius:12px;text-align:right}
+.small{font-size:12px;color:#94a3b8}
 </style>
 </head>
 
@@ -63,65 +65,79 @@ input{width:100%;padding:12px;margin-top:10px;border-radius:10px;border:none}
 
 <div class="container">
 
-<h1>هذا مو راتبك الحقيقي 😳</h1>
-
-<button class="primary" onclick="track('click_start'); scrollToCalc()">
-ابدأ الحساب الآن
-</button>
-
-<div class="card" id="calc">
+<h2>راتبك الحقيقي PRO 😳</h2>
 
 <input type="number" id="salary" placeholder="راتبك">
 <input type="number" id="expenses" placeholder="مصاريفك">
 
 <button class="danger" onclick="calculate()">احسب</button>
 
-<div class="result" id="result"></div>
-
-<button class="primary" id="cta" style="display:none" onclick="goToOffer()">
-اكتشف أكثر 🔥
-</button>
-
+<div class="card">
+    <div class="result" id="result"></div>
+    <button class="primary" id="cta" style="display:none" onclick="goToOffer()">
+    اكتشف أكثر 🔥
+    </button>
 </div>
+
+<!-- 📊 Dashboard -->
+<div class="dashboard">
+<h3>📊 Dashboard (Live Tracking)</h3>
+<div id="log"></div>
+</div>
+
 </div>
 
 <script>
 
-/// 🆔 User ID (مهم جداً)
+/// 🆔 User ID
 let userId = localStorage.getItem("uid");
 
 if(!userId){
-    userId = "user_" + Math.floor(Math.random()*100000000);
+    userId = "user_" + Math.floor(Math.random()*99999999);
     localStorage.setItem("uid", userId);
 }
 
-/// 📊 Tracking موحد
-function track(event, params={}) {
+/// 📦 تخزين الأحداث محليًا
+let events = JSON.parse(localStorage.getItem("events") || "[]");
 
-    let data = {
+function saveEvent(e){
+    events.push(e);
+    localStorage.setItem("events", JSON.stringify(events));
+    renderDashboard();
+}
+
+/// 📊 Tracking system
+function track(name, data={}){
+
+    let event = {
         user_id: userId,
-        ...params
+        event: name,
+        time: new Date().toLocaleString(),
+        ...data
     };
 
-    console.log(event, data);
+    console.log(event);
 
     // GA4
-    gtag('event', event, data);
+    if(typeof gtag === "function"){
+        gtag('event', name, event);
+    }
 
-    // Meta Pixel
+    // Meta
     if(window.fbq){
-        fbq('trackCustom', event, data);
+        fbq('trackCustom', name, event);
     }
 
     // TikTok
     if(window.ttq){
-        ttq.track(event, data);
+        ttq.track(name, event);
     }
+
+    saveEvent(event);
 }
 
-
-/// Funnel Step 1
-track("page_view", {step:"landing"});
+/// دخول الصفحة
+track("page_view",{step:"landing"});
 
 let s=false,e=false;
 
@@ -139,48 +155,51 @@ document.getElementById("expenses").addEventListener("input", function(){
     }
 });
 
-function scrollToCalc(){
-    track("scroll_interest",{step:"interest"});
-    document.getElementById("calc").scrollIntoView({behavior:"smooth"});
-}
-
 function calculate(){
 
     let salary = Number(document.getElementById("salary").value);
     let expenses = Number(document.getElementById("expenses").value);
 
     if(!salary || !expenses){
-        track("error_input");
+        track("input_error");
         return;
     }
 
     let result = salary - expenses;
 
-    /// Funnel Step 3
-    track("calculate",{salary,expenses,step:"intent"});
+    track("calculate_clicked",{salary,expenses});
 
     document.getElementById("result").style.display="block";
 
-    document.getElementById("result").innerHTML = 
-    `راتبك الحقيقي: ${result} ريال`;
+    document.getElementById("result").innerHTML =
+    `😳 صافي راتبك: ${result} ريال`;
 
-    /// Funnel Step 4 (Conversion step inside page)
-    track("result_shown",{
-        salary,
-        expenses,
-        net: result,
-        step:"conversion_intent"
-    });
+    track("result_shown",{salary,expenses,net:result});
 
     document.getElementById("cta").style.display="block";
 }
 
 function goToOffer(){
     track("conversion_click");
-
-    /// 🔥 تحويل فعلي
-    window.location.href = "https://technologyt795-dotcom.github.io/mizaniyati-free/";
+    window.location.href="https://technologyt795-dotcom.github.io/mizaniyati-free/";
 }
+
+/// 📊 Dashboard
+function renderDashboard(){
+
+    let html = "";
+
+    events.slice(-10).reverse().forEach(e=>{
+        html += `
+        <div class="small">
+        ${e.time} | ${e.event} | ${JSON.stringify(e).slice(0,60)}
+        </div>`;
+    });
+
+    document.getElementById("log").innerHTML = html;
+}
+
+renderDashboard();
 
 </script>
 
