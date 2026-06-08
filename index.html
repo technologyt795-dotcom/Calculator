@@ -1,1 +1,780 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>راتبك الحقيقي - اكتشف أين يذهب مالك</title>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-901R80XCW0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-901R80XCW0');
+        gtag('event', 'page_view');
+    </script>
 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+            padding: 45px 35px;
+            animation: slideUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .emoji-icon {
+            font-size: 56px;
+            margin-bottom: 18px;
+            display: inline-block;
+            animation: bounce 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 15px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .form-section {
+            margin-bottom: 35px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #555;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            right: 16px;
+            font-size: 15px;
+            color: #999;
+            pointer-events: none;
+            font-weight: 600;
+        }
+
+        .input-value-display {
+            position: absolute;
+            right: 16px;
+            font-size: 14px;
+            color: #667eea;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .input-value-display.show {
+            opacity: 1;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 16px 50px 16px 18px;
+            border: 2px solid #e8e8e8;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #fafafa;
+            color: #1a1a1a;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.12);
+            transform: translateY(-2px);
+        }
+
+        input[type="number"]::placeholder {
+            color: #ccc;
+        }
+
+        .input-helper {
+            font-size: 12px;
+            color: #bbb;
+            margin-top: 6px;
+            display: none;
+        }
+
+        input[type="number"]:focus ~ .input-helper {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .button-group {
+            display: flex;
+            gap: 14px;
+            margin-top: 32px;
+        }
+
+        button {
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            padding: 16px 20px;
+        }
+
+        .btn-calculate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 2;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-calculate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.5s ease;
+        }
+
+        .btn-calculate:hover:not(:disabled)::before {
+            left: 100%;
+        }
+
+        .btn-calculate:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-calculate:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .btn-calculate:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-reset {
+            background: #f2f2f2;
+            color: #666;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .btn-reset:hover {
+            background: #e8e8e8;
+            transform: translateY(-2px);
+        }
+
+        .btn-reset:active {
+            transform: translateY(0);
+        }
+
+        .result-section {
+            display: none;
+            margin-top: 35px;
+            padding: 32px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 20px;
+            animation: resultSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .result-section.show {
+            display: block;
+        }
+
+        @keyframes resultSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-label {
+            font-size: 12px;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .result-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 28px;
+            word-break: break-word;
+            animation: numberCountUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes numberCountUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .result-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .breakdown-item {
+            background: white;
+            padding: 16px;
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            animation: breakdownSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation-fill-mode: both;
+        }
+
+        .breakdown-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .breakdown-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes breakdownSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .breakdown-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .breakdown-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .breakdown-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .result-message {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 24px;
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            animation: messageSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation-delay: 0.3s;
+            animation-fill-mode: both;
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            display: none;
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button.show {
+            display: block;
+            animation: ctaSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation-delay: 0.4s;
+            animation-fill-mode: both;
+        }
+
+        @keyframes ctaSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(34, 197, 94, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e8e8e8;
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+        }
+
+        .security-badge::before {
+            content: "🔒";
+            font-size: 16px;
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            gap: 8px;
+        }
+
+        .progress-step {
+            flex: 1;
+            height: 4px;
+            background: #e8e8e8;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-step.active {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .progress-step.completed {
+            background: #22c55e;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 35px 24px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .result-value {
+                font-size: 36px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-calculate {
+                flex: 1;
+            }
+
+            .btn-reset {
+                flex: 1;
+            }
+
+            .result-section {
+                padding: 24px;
+            }
+        }
+
+        /* Loading state */
+        .calculating {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calculating::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="header">
+                <div class="emoji-icon">💰</div>
+                <h1>راتبك الحقيقي</h1>
+                <p class="subtitle">اكتشف كم يبقى من راتبك بعد المصاريف وابدأ رحلتك نحو الحرية المالية</p>
+            </div>
+
+            <div class="progress-indicator">
+                <div class="progress-step active"></div>
+                <div class="progress-step"></div>
+                <div class="progress-step"></div>
+            </div>
+
+            <form id="calculatorForm" class="form-section">
+                <div class="form-group">
+                    <label for="salary">راتبك الشهري</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="number" 
+                            id="salary" 
+                            placeholder="أدخل راتبك الشهري" 
+                            inputmode="numeric"
+                            required
+                        >
+                        <span class="currency-symbol">ر.س</span>
+                    </div>
+                    <div class="input-helper">💡 أدخل راتبك الأساسي قبل الخصومات</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="expenses">مصاريفك الشهرية</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="number" 
+                            id="expenses" 
+                            placeholder="أدخل مصاريفك الشهرية" 
+                            inputmode="numeric"
+                            required
+                        >
+                        <span class="currency-symbol">ر.س</span>
+                    </div>
+                    <div class="input-helper">💡 شامل الإيجار، الطعام، الفواتير، وكل شيء</div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-calculate" onclick="calculate()">
+                        احسب الآن 🚀
+                    </button>
+                    <button type="reset" class="btn-reset" onclick="resetForm()">
+                        إعادة تعيين
+                    </button>
+                </div>
+            </form>
+
+            <div class="result-section" id="resultSection">
+                <div class="result-label">صافي راتبك الحقيقي</div>
+                <div class="result-value" id="resultValue">0</div>
+
+                <div class="result-breakdown">
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">الراتب</div>
+                        <div class="breakdown-value" id="breakdownSalary">0</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">المصاريف</div>
+                        <div class="breakdown-value" id="breakdownExpenses">0</div>
+                    </div>
+                </div>
+
+                <div class="result-message" id="resultMessage">
+                    اكتشف كيف تتحكم بفلوسك بشكل أفضل وتحقق أهدافك المالية
+                </div>
+
+                <button class="cta-button" id="ctaButton" onclick="goToOffer()">
+                    🔥 ابدأ إدارة أموالك الآن
+                </button>
+            </div>
+
+            <div class="security-badge">
+                بياناتك آمنة - لا تُرفع أو تُشارك
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tracking function
+        function track(event, data = {}) {
+            if (typeof gtag === "function") {
+                gtag('event', event, data);
+            }
+            console.log(event, data);
+        }
+
+        // Track page view
+        track("page_view");
+
+        // Format number with commas
+        function formatNumber(num) {
+            return Math.round(num).toLocaleString('ar-SA');
+        }
+
+        // Debounce timers
+        let salaryTimer;
+        let expensesTimer;
+
+        // Salary input tracking
+        document.getElementById("salary").addEventListener("input", function() {
+            clearTimeout(salaryTimer);
+            salaryTimer = setTimeout(() => {
+                let value = Number(this.value);
+                if (value) {
+                    track("salary_entered", { salary: value });
+                }
+            }, 800);
+        });
+
+        // Expenses input tracking
+        document.getElementById("expenses").addEventListener("input", function() {
+            clearTimeout(expensesTimer);
+            expensesTimer = setTimeout(() => {
+                let value = Number(this.value);
+                if (value) {
+                    track("expenses_entered", { expenses: value });
+                }
+            }, 800);
+        });
+
+        // Calculate function
+        function calculate() {
+            let salary = Number(document.getElementById("salary").value);
+            let expenses = Number(document.getElementById("expenses").value);
+
+            if (!salary || !expenses) {
+                track("input_error");
+                alert("الرجاء إدخال كل من الراتب والمصاريف");
+                return;
+            }
+
+            if (salary < 0 || expenses < 0) {
+                track("invalid_input");
+                alert("الرجاء إدخال أرقام موجبة فقط");
+                return;
+            }
+
+            let result = salary - expenses;
+
+            track("calculate_clicked", { salary, expenses });
+
+            // Update progress indicator
+            document.querySelectorAll('.progress-step').forEach((step, index) => {
+                if (index === 0) step.classList.add('completed');
+                if (index === 1) step.classList.add('active');
+            });
+
+            // Update result display with animation
+            setTimeout(() => {
+                document.getElementById("resultValue").textContent = formatNumber(result);
+                document.getElementById("breakdownSalary").textContent = formatNumber(salary);
+                document.getElementById("breakdownExpenses").textContent = formatNumber(expenses);
+
+                // Update result message based on result
+                let message = "";
+                let emoji = "";
+                if (result > salary * 0.3) {
+                    emoji = "✅";
+                    message = `ممتاز! لديك فائض شهري قدره <strong>${formatNumber(result)} ريال</strong>. هذا رقم صحي جداً! استثمر هذا المبلغ في أهدافك المالية والادخار.`;
+                } else if (result > 0) {
+                    emoji = "👍";
+                    message = `جيد! لديك فائض شهري قدره <strong>${formatNumber(result)} ريال</strong>. حاول زيادة هذا المبلغ بتقليل المصاريف غير الضرورية.`;
+                } else if (result === 0) {
+                    emoji = "⚠️";
+                    message = `تنبيه! راتبك يساوي مصاريفك تماماً. ابدأ بتقليل المصاريف غير الضرورية لتحقيق الادخار.`;
+                } else {
+                    emoji = "🚨";
+                    message = `تنبيه مهم! مصاريفك تزيد عن راتبك بمقدار <strong>${formatNumber(Math.abs(result))} ريال</strong>. حان الوقت لإعادة تقييم نفقاتك بجدية.`;
+                }
+
+                document.getElementById("resultMessage").innerHTML = `${emoji} ${message}`;
+
+                // Show result section
+                document.getElementById("resultSection").classList.add("show");
+                document.getElementById("ctaButton").classList.add("show");
+
+                track("result_shown", { salary, expenses, net: result });
+
+                // Scroll to result
+                setTimeout(() => {
+                    document.getElementById("resultSection").scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }, 100);
+            }, 300);
+        }
+
+        // Reset form
+        function resetForm() {
+            document.getElementById("calculatorForm").reset();
+            document.getElementById("resultSection").classList.remove("show");
+            document.getElementById("ctaButton").classList.remove("show");
+            document.querySelectorAll('.progress-step').forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            document.querySelector('.progress-step').classList.add('active');
+            track("form_reset");
+        }
+
+        // Conversion tracking
+        function goToOffer() {
+            track("conversion_click");
+            window.location.href = "https://technologyt795-dotcom.github.io/mizaniyati-free/";
+        }
+
+        // Allow Enter key to submit
+        document.getElementById("calculatorForm").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                calculate();
+            }
+        });
+
+        // Initialize progress indicator
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector('.progress-step').classList.add('active');
+        });
+    </script>
+</body>
+</html>
