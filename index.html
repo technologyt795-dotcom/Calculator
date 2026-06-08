@@ -782,6 +782,112 @@
         document.addEventListener("DOMContentLoaded", function() {
             document.querySelector('.progress-step').classList.add('active');
         });
+        // js/download-handler.js
+
+class DownloadHandler {
+  constructor() {
+    this.appStoreUrl = 'https://apps.apple.com/sa/app/mizania/id123456789';
+    this.playStoreUrl = 'https://play.google.com/store/apps/details?id=com.mizania.app';
+    this.initializeButton(  );
+  }
+  
+  initializeButton() {
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', () => this.handleDownloadClick());
+    }
+  }
+  
+  handleDownloadClick() {
+    // تتبع الحدث
+    this.trackEvent('download_button_clicked', {
+      timestamp: new Date().toISOString(),
+      userAgent: navigator.userAgent
+    });
+    
+    // تحديد نظام التشغيل
+    const userAgent = navigator.userAgent;
+    let appStoreUrl = '';
+    let platform = '';
+    
+    if (/iPad|iPhone|iPod/.test(userAgent)) {
+      appStoreUrl = this.appStoreUrl;
+      platform = 'iOS';
+    } else if (/Android/.test(userAgent)) {
+      appStoreUrl = this.playStoreUrl;
+      platform = 'Android';
+    } else {
+      // ديسكتوب - عرض خيارات
+      this.showDownloadOptions();
+      return;
+    }
+    
+    // تتبع التحميل
+    this.trackEvent('download_redirected', {
+      platform: platform,
+      url: appStoreUrl
+    });
+    
+    // فتح المتجر
+    window.open(appStoreUrl, '_blank');
+  }
+  
+  showDownloadOptions() {
+    // إنشاء نافذة منفثقة
+    const modal = document.createElement('div');
+    modal.className = 'download-modal-overlay';
+    modal.innerHTML = `
+      <div class="download-modal">
+        <button class="modal-close">&times;</button>
+        <h3>اختر متجرك</h3>
+        <p>اختر المتجر المناسب لجهازك</p>
+        <div class="store-options">
+          <a href="${this.appStoreUrl}" target="_blank" class="store-link ios-link">
+            <span class="store-icon">🍎</span>
+            <span class="store-name">App Store</span>
+            <span class="store-desc">لأجهزة iPhone و iPad</span>
+          </a>
+          <a href="${this.playStoreUrl}" target="_blank" class="store-link android-link">
+            <span class="store-icon">🤖</span>
+            <span class="store-name">Google Play</span>
+            <span class="store-desc">لأجهزة Android</span>
+          </a>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // إغلاق النافذة
+    modal.querySelector('.modal-close').addEventListener('click', () => {
+      modal.remove();
+    });
+    
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove();
+      }
+    });
+  }
+  
+  trackEvent(eventName, eventData) {
+    // إرسال إلى Google Analytics (إذا كان موجوداً)
+    if (window.gtag) {
+      gtag('event', eventName, eventData);
+    }
+    
+    // إرسال إلى خادمك الخاص
+    console.log(`Event: ${eventName}`, eventData);
+    
+    // يمكنك إضافة هنا إرسال إلى API الخاص بك
+    // fetch('/api/track', { ... })
+  }
+}
+
+// تهيئة عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+  new DownloadHandler();
+});
     </script>
 </body>
 </html>
